@@ -13,23 +13,22 @@
 <body>
 <div class="container">
   <div class="jumbotron">
-    <h1>Employee Data Management</h1>
-    <h4>A Comprehensive Directory of Employee Billable hours</h4>
+    <h1>Train Time</h1>
+    <h4>A Comprehensive Train Schedule to Ensure You Don't Get Railroad'ed!!!</h4>
   </div>
 </div>
 <div class="container">
   <div class="panel panel-primary">
-    <div class="panel-heading">Current Employees</div>
+    <div class="panel-heading">Train Schedule</div>
     <div class="panel-body">
-      <table id="employeeTable" class="table" >
+      <table id="trainTable" class="table">
         <thead>
           <tr>
-            <th>Employee Name</th>
-            <th>Role</th>
-            <th>Start Date</th>
-            <th>Months Worked</th>
-            <th>Monthly Rate ($)</th>
-            <th>Total Billed ($)</th>
+            <th>Train Name</th>
+            <th>Destination</th>
+            <th>Frequency</th>
+            <th>Next Arrival</th>
+            <th>Minutes Away</th>
           </tr>
         </thead>
         <tbody>
@@ -40,24 +39,24 @@
 </div>
 <div class="container">
   <div class="panel panel-primary">
-    <div class="panel-heading">Add an Employee</div>
+    <div class="panel-heading">Add A Train</div>
     <div class="panel-body">
       <form>
         <div class="form-group">
-          <label for="employeeName">Employee Name</label>
-          <input type="text" class="form-control" id="employeeName" placeholder="Employee Name">
+          <label for="trainName">Train Name</label>
+          <input type="text" class="form-control" id="trainName" placeholder="Name">
         </div>
         <div class="form-group">
-          <label for="employeeRole">Role</label>
-          <input type="text" class="form-control" id="employeeRole" placeholder="Role">
+          <label for="trainDestination">Destination</label>
+          <input type="text" class="form-control" id="trainDestination" placeholder="Destination">
         </div>
         <div class="form-group">
-          <label for="employeeStartDate">Start Date</label>
-          <input type="text" class="form-control" id="employeeStartDate" placeholder="DD/MM/YY">
+          <label for="trainFrequency">Train Start Time</label>
+          <input type="text" class="form-control" id="trainStart" placeholder="HH:mm">
         </div>
         <div class="form-group">
-          <label for="employeeRate">Monthly Rate</label>
-          <input type="number" class="form-control" id="employeeRate" placeholder="$0.00">
+          <label for="nextArrival">Frequency</label>
+          <input type="number" class="form-control" id="trainFrequency" placeholder="(min)">
         </div>
         <button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
       </form>

@@ -1,53 +1,73 @@
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyB64qCJWi7vneDYqIGekyCX8OIrQZyKjXY",
-    authDomain: "employeedata-48659.firebaseapp.com",
-    databaseURL: "https://employeedata-48659.firebaseio.com",
-    storageBucket: "employeedata-48659.appspot.com",
-    messagingSenderId: "926004869636"
+  	apiKey: "AIzaSyD-kTp3iIOnLAhh7TsiQSJ-1rJkSCDlJnY",
+  	authDomain: "trainschedule-4733c.firebaseapp.com",
+  	databaseURL: "https://trainschedule-4733c.firebaseio.com",
+  	storageBucket: "trainschedule-4733c.appspot.com",
+  	messagingSenderId: "382103491835"
   };
   firebase.initializeApp(config);
 
-var database = firebase.database();
+  var database = firebase.database();
 
-    database.ref().on("child_added", function(snapshot){
-        "use strict";
-        //console.log(snapshot.child("name").val());
-        
-        var newName = snapshot.child("name").val();
-        var newRole = snapshot.child("role").val();
-        var newDate = snapshot.child("startDate").val();
-        var newRate = snapshot.child("monthlyRate").val();
-        var monthsWorked = moment().diff(newDate, "months");
-        var totalEarned = monthsWorked * newRate;
-        
-        var entry = "<tr><td class='nameCell'>" + newName + "</td><td class='roleCell'>" + newRole + "</td><td class='dateCell'>" + newDate + "</td><td class='monthCell'>" + monthsWorked + "</td><td class='rateCell'>" + newRate + "</td><td class='totalCell'>$" + totalEarned + "</td></tr>";
-        
-        $("#employeeTable").append(entry);
-        
-    });
+  database.ref().on("child_added", function (snapshot) {
+  	"use strict";
+  	//console.log(snapshot.child("name").val());
 
-$("#submitButton").on("click", function(){
-"use strict";
+  	var newTrain = snapshot.child("name").val();
+  	var newDestination = snapshot.child("destination").val();
+  	var newFrequency = snapshot.child("frequency").val();
+  	var nextArrival = null;
+  	var minAway = null;
 
-var employeeName = $("#employeeName").val().trim();
-console.log(employeeName);
+  	var newStart = snapshot.child("startTime").val();
+  	newStart = moment(newStart, "HH:mm");
+  	console.log(newStart);
 
-var employeeRole = $("#employeeRole").val().trim();
-console.log(employeeRole);
+  	var currentTime = moment();
+  	currentTime = moment.unix(currentTime);
+  	console.log(currentTime);
 
-var startDate = $("#employeeStartDate").val();
-console.log(startDate);
+  	var temp = newStart;
 
-var monthlyRate = $("#employeeRate").val();
-console.log(monthlyRate);
+  	do {
+  		temp += moment().add(newFrequency);
 
-    database.ref().push({
-        name: employeeName,
-        role: employeeRole,
-        startDate: startDate,
-        monthlyRate: monthlyRate
-    });
-    return false;
-});
+  	} while (temp <= currentTime);
+  	temp = moment(temp).format("HH:mm");
+  	console.log(temp);
 
+
+
+  	//var timeDifference = moment.diff(newStart);
+  	//console.log(timeDifference);
+
+  	var entry = "<tr><td>" + newTrain + "</td><td>" + newDestination + "</td><td>" + newFrequency + "</td><td>" + nextArrival + "</td>" + "<td>" + minAway + "</td>";
+
+  	$("#trainTable").append(entry);
+
+  });
+
+  $("#submitButton").on("click", function () {
+  	"use strict";
+
+  	var trainName = $("#trainName").val().trim();
+  	console.log(trainName);
+
+  	var trainDestination = $("#trainDestination").val().trim();
+  	console.log(trainDestination);
+
+  	var trainFrequency = $("#trainFrequency").val();
+  	console.log(trainFrequency);
+
+  	var trainStart = $("#trainStart").val();
+  	console.log(trainStart);
+
+  	database.ref().push({
+  		name: trainName,
+  		destination: trainDestination,
+  		startTime: trainStart,
+  		frequency: trainFrequency
+  	});
+  	return false;
+  });
